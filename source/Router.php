@@ -2,8 +2,8 @@
 
 namespace bartoszmajczak;
 
-require './libraries/Request.php';
-require './libraries/Response.php';
+require 'Request.php';
+require 'Response.php';
 
 use bartoszmajczak\Request;
 use bartoszmajczak\Response;

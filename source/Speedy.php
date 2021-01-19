@@ -2,7 +2,7 @@
 
 namespace bartoszmajczak;
 
-require './libraries/Router.php';
+require 'Router.php';
 
 use bartoszmajczak\Router;
 
