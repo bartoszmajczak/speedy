@@ -1,0 +1,30 @@
+{
+  "name": "bartoszmajczak/speedy",
+  "description": "Simple web routing library for php, similar to express framework",
+
+  "authors": [
+    {
+      "name": "Bartosz Szymon Majczak",
+      "role": "Developer",
+      "email": "bartosz.szymon.majczak@gmail.com"
+    }
+  ],
+
+  "require": {
+    "php": ">=7.4.1"
+  },
+
+  "license": "MIT",
+
+  "keywords": [
+    "web",
+    "express",
+    "routing"
+  ],
+
+  "autoload": {
+    "psr-4": {
+      "bartoszmajczak\\": "source"
+    }
+  }
+}
