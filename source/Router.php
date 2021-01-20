@@ -12,7 +12,7 @@ class Router {
   private $request;
   private $response;
 
-  private $data;
+  private $data = [];
 
   function __construct() {
     $this -> request = new Request;
