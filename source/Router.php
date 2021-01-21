@@ -14,7 +14,7 @@ class Router {
 
   private $data = [];
 
-  function __construct() {
+  public function __construct() {
     $this -> request = new Request;
     $this -> response = new Response;
   }
@@ -33,12 +33,12 @@ class Router {
           is_string($key) ? $parameters[$key] = $value : null;
         }
 
-        $this -> request -> parameters = !empty($parameters) ? $parameters : null;
+        !empty($parameters) ? $this -> request -> parameters = $parameters : null;
 
         foreach ($arguments as $key => $value) {
           $return = $value($this -> request, $this -> response, $this -> data);
 
-          $return != null ? $this -> data = array_merge($this -> data, [$return]) : null;
+          $return ? $this -> data = array_merge($this -> data, [$return]) : null;
         }
 
         $callback($this -> request, $this -> response, $this -> data);

@@ -3,14 +3,16 @@
 namespace bartoszmajczak;
 
 class Request {
-  public $route;
-  public $method;
-  public $contents;
-  public $parameters;
+  public $route = [];
+  public $method = [];
+  public $headers = [];
+  public $contents = [];
+  public $parameters = [];
 
-  function __construct() {
+  public function __construct() {
     $this -> route();
     $this -> method();
+    $this -> headers();
     $this -> contents();
   }
 
@@ -24,6 +26,12 @@ class Request {
     $method = strtolower($_SERVER['REQUEST_METHOD']);
 
     $this -> method = $method;
+  }
+
+  private function headers() : void {
+    $headers = getallheaders();
+
+    $this -> headers = $headers;
   }
 
   private function contents() : void {

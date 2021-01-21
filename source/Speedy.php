@@ -9,7 +9,7 @@ use bartoszmajczak\Router;
 class Speedy {
   private $router;
 
-  function __construct() {
+  public function __construct() {
     $this -> router = new Router;
   }
 
