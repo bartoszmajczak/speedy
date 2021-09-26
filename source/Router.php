@@ -19,14 +19,14 @@ class Router {
     $this -> response = new Response;
   }
 
-  public function route($method, $arguments) : void {
+  public function route(string $method, array $arguments): void {
     $route = array_shift($arguments);
     $callback = array_pop($arguments);
 
     if ($method == $this -> request -> method) {
       preg_match($route, $this -> request -> route, $matches);
 
-      if ($matches) {
+      if (isset($matches) && !empty($matches)) {
         $parameters = [];
 
         foreach ($matches as $key => $value) {
