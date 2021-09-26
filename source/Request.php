@@ -39,8 +39,6 @@ class Request {
   private function headers(): void {
     $headers = getallheaders();
 
-    var_dump(getallheaders());
-
     $this -> headers = $headers;
   }
 
