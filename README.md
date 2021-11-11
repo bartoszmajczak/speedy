@@ -3,9 +3,20 @@
 ### Instalation
 
 #
+
 Installation is done using the `composer`:
 ```bash
 composer require bartoszmajczak/speedy:dev-master
+```
+Add htaccess in main index.php directory
+
+```htaccess
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^(.*)$ index.php [QSA,L]
 ```
 
 ### Basic examples
