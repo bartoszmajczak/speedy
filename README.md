@@ -69,6 +69,14 @@ $speedy -> get('*', function($request, $response) {
 #### Template
 
 ```php
+<?php
+
+require './vendor/autoload.php';
+
+use bartoszmajczak\Speedy;
+
+$speedy = new Speedy;
+
 $speedy -> get('/users/{user}/books/{book}', function($request, $response): void {
   $user = $request -> parameters['user'];
   $book = $request -> parameters['book'];
@@ -84,6 +92,14 @@ $speedy -> get('/users/{user}/books/{book}', function($request, $response): void
 #### Regex
 
 ```php
+<?php
+
+require './vendor/autoload.php';
+
+use bartoszmajczak\Speedy;
+
+$speedy = new Speedy;
+
 $speedy -> get('/^\/users\/(?<user>\d+)\/books\/(?<book>\d+)\/?$/', function($request, $response): void {
   $user = $request -> parameters['user'];
   $book = $request -> parameters['book'];
