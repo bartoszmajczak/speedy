@@ -8,7 +8,7 @@ Installation is done using the `composer`:
 ```bash
 composer require bartoszmajczak/speedy:dev-master
 ```
-Add htaccess in main index.php directory
+Add ".htaccess" file in main index.php directory
 
 ```htaccess
 RewriteEngine On
