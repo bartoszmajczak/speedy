@@ -23,7 +23,7 @@ use bartoszmajczak\Speedy;
 
 $speedy = new Speedy;
 
-$speedy -> get('/^(.*)$/', function($request, $response) {
+$speedy -> get('*', function($request, $response) {
   $response -> html('
     <p>Habemus papam</p>
   ');
@@ -43,11 +43,43 @@ use bartoszmajczak\Speedy;
 
 $speedy = new Speedy;
 
-$speedy -> get('/^(.*)$/', function($request, $response) {
+$speedy -> get('*', function($request, $response) {
   $response -> json([
     'id' => 2137,
     'username' => 'jp2gmd'
   ]);
+});
+```
+
+### Routing
+
+#
+
+#### Template
+
+```php
+$speedy -> get('/users/{user}/books/{book}', function($request, $response): void {
+  $user = $request -> parameters['user'];
+  $book = $request -> parameters['book'];
+
+  $response -> html("
+    <h1>user ${user} and book ${book}</h1>
+  ");
+});
+```
+
+#
+
+#### Regex
+
+```php
+$speedy -> get('/^\/users\/(?<user>\d+)\/books\/(?<book>\d+)\/?$/', function($request, $response): void {
+  $user = $request -> parameters['user'];
+  $book = $request -> parameters['book'];
+
+  $response -> html("
+    <h1>user ${user} and book ${book}</h1>
+  ");
 });
 ```
 
