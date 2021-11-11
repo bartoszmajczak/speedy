@@ -20,23 +20,67 @@ class Router {
   }
 
   public function route(string $method, array $arguments): void {
+    // separate route and callback from middleware
     $route = array_shift($arguments);
     $callback = array_pop($arguments);
 
+    // check if route method match request method
     if ($method == $this -> request -> method) {
-      preg_match($route, $this -> request -> route, $matches);
+      // check if route is empty
+      if (empty($route)) {
+        exit('route can not be empty');
+      }
 
-      if (isset($matches) && !empty($matches)) {
+      // check if you are using template route
+      if (!str_starts_with($route, '/^') && !str_ends_with($route, '$/')) {
+        switch ($route) {
+          // special cases in template
+          case '*':
+              // matching all for regex
+              $route = '/^(.*)$/';
+            break;
+          // default case in template
+          default:
+              // escaping route for regex
+              $route = str_replace('/', '\/', $route);
+
+              // adding start and end for regex
+              $route = '/^' . $route;
+
+              if (!str_ends_with($route, '/')) {
+                $route = $route . '\/?$/';
+              } else {
+                $route = $route . '?$/';
+              }
+
+              // matching template parameters
+              preg_match_all('/{(?<parameter>.+?)}/', $route, $parameter_matches);
+
+              // creating regex groups from template parameters
+              if (isset($parameter_matches) && !empty($parameter_matches)) {
+                foreach ($parameter_matches['parameter'] as $parameter) {
+                  $route = str_replace('{' . $parameter . '}', '(?<' . $parameter . '>.+)', $route);
+                }
+              }
+            break;
+        }
+      }
+
+      // matching route with request route
+      preg_match($route, $this -> request -> route, $route_match);
+
+      // check if route match request route
+      if (isset($route_match) && !empty($route_match)) {
         $parameters = [];
 
-        foreach ($matches as $key => $value) {
+        foreach ($route_match as $key => $value) {
           is_string($key) ? $parameters[$key] = urldecode($value) : null;
         }
 
         $parameters ? $this -> request -> parameters = $parameters : null;
 
-        foreach ($arguments as $key => $value) {
-          $return = $value($this -> request, $this -> response, $this -> data);
+        foreach ($arguments as $argument) {
+          $return = $argument($this -> request, $this -> response, $this -> data);
 
           $return ? $this -> data = array_merge($this -> data, [$return]) : null;
         }
