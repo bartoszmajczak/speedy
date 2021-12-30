@@ -12,8 +12,6 @@ class Router {
   private $request;
   private $response;
 
-  private $data = [];
-
   public function __construct() {
     $this -> request = new Request;
     $this -> response = new Response;
@@ -73,19 +71,21 @@ class Router {
       if (isset($route_match) && !empty($route_match)) {
         $parameters = [];
 
+        // adding every parameter to array if key is string
         foreach ($route_match as $key => $value) {
           is_string($key) ? $parameters[$key] = urldecode($value) : null;
         }
 
-        $parameters ? $this -> request -> parameters = $parameters : null;
+        // adding parameters to request class
+        !empty($parameters) ? $this -> request -> parameters = $parameters : null;
 
+        // executing middlewares
         foreach ($arguments as $argument) {
-          $return = $argument($this -> request, $this -> response, $this -> data);
-
-          $return ? $this -> data = array_merge($this -> data, [$return]) : null;
+          $argument($this -> request, $this -> response);
         }
 
-        $callback($this -> request, $this -> response, $this -> data);
+        // executing last callback
+        $callback($this -> request, $this -> response);
       }
     }
   }
